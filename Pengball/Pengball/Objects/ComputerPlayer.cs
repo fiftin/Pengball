@@ -19,9 +19,6 @@ namespace Pengball.Objects
             Other,
         }
 
-        private float targetPositionOffset = 0.07f;
-        private float targetPositionRandomOffset = 0.05f;
-
         private PengballWorld parallelWorld;
         private float? targetPosition;
         private DateTime? targetTime;
@@ -30,15 +27,16 @@ namespace Pengball.Objects
         private Vector2? previousUpdateBollPosition;
 
 
-
-        public ComputerPlayer(string id, PengWorld world, PlayerSide dir, Vector2 startPosition)
-            : base(id, world, dir, startPosition)
+        public ComputerPlayer(string id, PengWorld world, PlayerSide side, Vector2 startPosition)
+            : base(id, world, side, startPosition)
         {
             string screenplay = ((PengballWorld)world).Screenplay;
             screenplay = screenplay.Replace("ComputerPlayer", "Player");
             parallelWorld = new PengballWorld(null, world.Content, false, screenplay, false);
             parallelWorld.Tag = "parallelWorld";
             ((PengballWorld)world).Loaded += new EventHandler(world_Loaded);
+            TargetPositionOffset = 0.07f;
+            TargetPositionRandomOffset = 0.05f;
         }
 
         void world_Loaded(object sender, EventArgs e)
@@ -114,11 +112,13 @@ namespace Pengball.Objects
                 }
 
                 // мяч достиг точки для удара
-                if (parallelWorld.Ball.Position.X > 3f && parallelWorld.Ball.Position.Y > 2f && parallelWorld.Ball.LinearVelocity.Y > 0)
+                if (InMySide(parallelWorld.Ball.Position)
+                    && parallelWorld.Ball.Position.Y > 2f && parallelWorld.Ball.LinearVelocity.Y > 0)
+                {
                     break;
-
+                }
                 // мяч перелетел на другую сторону поля
-                if (parallelWorld.Ball.Position.X < 2.3)
+                if (!InMySide(parallelWorld.Ball.Position))
                 {
                     stopCalculation = true;
                     break;
@@ -126,7 +126,21 @@ namespace Pengball.Objects
             }
             if (!stopCalculation)
             {
-                targetPosition = parallelWorld.Ball.Position.X + TargetPositionOffset + (float)random.NextDouble() * targetPositionRandomOffset;
+                targetPosition = parallelWorld.Ball.Position.X + Sign * TargetPositionOffset + (float)random.NextDouble() * Sign * TargetPositionRandomOffset;
+                
+                if (targetPosition > WorldSize.X / 2 - (World.Objects["treeBlock"].Size.X / 2 + Size.X / 2)
+                    && targetPosition < WorldSize.X / 2 + (World.Objects["treeBlock"].Size.X / 2 + Size.X / 2))
+                {
+                    if (Side == PlayerSide.Left)
+                    {
+                        targetPosition = WorldSize.X / 2 - (World.Objects["treeBlock"].Size.X / 2 + Size.X / 2);
+                    }
+                    else
+                    {
+                        targetPosition = WorldSize.X / 2 + (World.Objects["treeBlock"].Size.X / 2 + Size.X / 2);
+                    }
+                }
+
                 targetTime = DateTime.Now.Add(totalGameTime - TimeSpan.FromMilliseconds(700));
             }
             else
@@ -139,14 +153,14 @@ namespace Pengball.Objects
 
         public float TargetPositionRandomOffset
         {
-            get { return targetPositionRandomOffset; }
-            set { targetPositionRandomOffset = value; }
+            get;
+            set;
         }
 
         public float TargetPositionOffset
         {
-            get { return targetPositionOffset; }
-            set { targetPositionOffset = value; }
+            get;
+            set;
         }
 
         public override void OnDraw(GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
@@ -162,13 +176,20 @@ namespace Pengball.Objects
             base.OnDraw(gameTime, spriteBatch);
         }
 
+        private float GetStartTargetPosition()
+        {
+            if (Side == PlayerSide.Right)
+                return 3.5f;
+            else
+                return 2.5f;
+        }
 
         protected override void OnReset()
         {
             base.OnReset();
-            if (World.Ball.Position.X > 3)
+            if (InMySide(Ball.Position))
             {
-                targetPosition = 3.5f;
+                targetPosition = GetStartTargetPosition();
                 targetTime = null;
                 JumpInternal();
             }
@@ -179,19 +200,26 @@ namespace Pengball.Objects
             }
         }
 
+        private float Sign
+        {
+            get
+            {
+                return Side == PlayerSide.Right ? 1 : -1;
+            }
+        }
+
         public override void OnUpdate(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (!GameStopped)
+            if (GameStopped)
             {
                 base.OnUpdate(gameTime);
                 return;
             }
 
-
             if (previousUpdateBollPosition.HasValue
                 && !InMySide(previousUpdateBollPosition.Value)
                 && InMySide(World.Ball.Position)
-                && World.Ball.LinearVelocity.X > 0)
+                && Sign * World.Ball.LinearVelocity.X > 0)
             {
                 CalculateTargetPosition(ContacteeEnum.Other);
             }
