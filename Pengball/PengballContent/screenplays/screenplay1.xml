@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.String">
+    <![CDATA[
+<world>
+  <objects>
+  
+    <object name="tree" type="Pengball.Objects.Tree, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <props>
+        <prop name="Position">
+          <v>2.5;3.3</v>
+        </prop>
+        <prop name="Friction">
+          <v>0</v>
+        </prop>
+      </props>
+    </object>
+    
+    <object name="treeBlock" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>d
+        <arg type="vector"> 
+          <v>0.5;8</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>2.5;-0.7</v>
+        </prop>
+        <prop name="Friction">
+          <v>0</v>
+        </prop>
+      </props>
+    </object>
+
+    <object name="ballLeftStand" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>0.4;0.1</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>1;2.2</v>
+        </prop>
+      </props>
+    </object>
+
+    <object name="ballRightStand" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>0.4;0.1</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>4;2.2</v>
+        </prop>
+      </props>
+    </object>
+    <object name="roof" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>6;0.1</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>2.5;-4</v> <!-- 2.5;-4.7 -->
+        </prop>
+      </props>
+    </object>
+    
+    <object name="footer" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>6;0.1</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>2.5;3.3</v>
+        </prop>
+      </props>
+    </object>
+    
+    <object name="leftWall" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>0.1;8</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>-0.4;-0.7</v>
+        </prop>
+        <prop name="Friction">
+          <v>0</v>
+        </prop>
+      </props>
+    </object>
+    
+    <object name="rightWall" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>0.1;8</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>5.4;-0.7</v>
+        </prop>
+        <prop name="Friction">
+          <v>0</v>
+        </prop>
+      </props>
+    </object>
+    
+    <object name="leftWallForBall" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>0.1;8</v>
+        </arg>
+      </args>
+      <props>
+
+        <prop name="Position">
+          <v>-0.06;-0.7</v>
+        </prop>
+        <prop name="Friction">
+          <v>0</v>
+        </prop>
+      </props>
+    </object>
+
+    <object name="rightWallForBall" type="PengEngine.Objects.PengBlock, PengEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="vector"> 
+          <v>0.1;8</v>
+        </arg>
+      </args>
+      <props>
+        <prop name="Position">
+          <v>5.1;-0.7</v>
+        </prop>
+        <prop name="Friction">
+          <v>0</v>
+        </prop>
+      </props>
+    </object>
+    
+    <object name="ball" type="Pengball.Objects.Ball, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      
+      <args>
+        <arg type="vector">
+          <v>1;2</v>
+        </arg>
+        <arg type="vector">
+          <v>4;2</v>
+        </arg>
+        <arg type="System.Single"> <!-- Redius -->
+          <v>0.2</v>
+        </arg>
+      </args>
+      
+      <props>
+        <prop name="Restitution">
+          <v>0.3</v>
+        </prop>
+        <prop name="Friction">
+          <v>0.5</v>
+        </prop>
+        <prop name="AngularDamping">
+          <v>0.4</v>
+        </prop>
+        <prop name="LinearDamping">
+          <v>0.03</v>
+        </prop>
+        <prop name="Mass">
+          <v>0.4</v>
+        </prop>
+      </props>
+    </object>
+
+    
+    <object name="leftPlayer" type="Pengball.Objects.ManualPlayer, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="Pengball.Objects.PlayerDirection">
+          <v>Right</v>
+        </arg>
+        <arg type="vector">
+          <v>0.8;2.9</v>    <!-- StartPosition -->
+        </arg>
+      </args>
+      <props>
+        <prop name="UpKey">
+          <v>W</v>
+        </prop>
+        <prop name="LeftKey">
+          <v>A</v>
+        </prop>
+        <prop name="RightKey">
+          <v>D</v>
+        </prop>
+        <prop name="Mass">
+          <v>3</v>
+        </prop>
+        <prop name="JumpImpulse">
+          <v>18</v>
+        </prop>
+      </props>
+    </object>
+
+    <object name="rightPlayer" type="Pengball.Objects.ComputerPlayer, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <args>
+        <arg type="Pengball.Objects.PlayerDirection"> 
+          <v>Left</v> 
+        </arg>
+        <arg type="vector"> 
+          <v>4.5;2.9</v>    <!-- StartPosition --> 
+        </arg>
+      </args>
+      <props>
+        <prop name="Mass">
+          <v>3</v>
+        </prop>
+        <prop name="JumpImpulse">
+          <v>18</v>
+        </prop>
+        <!--
+        <prop name="TargetPositionRandomOffset">
+          <v>0.1</v>
+        </prop>
+        <prop name="TargetPositionOffset">
+          <v>0.05</v>
+        </prop>
+        -->
+      </props>
+    </object>
+
+  </objects>
+</world>
+]]></Asset>
+</XnaContent>

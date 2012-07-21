@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerticesDeterminator", "VerticesDeterminator\VerticesDeterminator.csproj", "{DA7BF2D2-04F3-48A5-9AD2-E49AC2D9EB29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarseerBodyMaker", "FarseerBodyMaker\FarseerBodyMaker.csproj", "{4E9BCA9D-2D08-4576-B8D5-64FB2CB27AA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA7BF2D2-04F3-48A5-9AD2-E49AC2D9EB29}.Debug|x86.ActiveCfg = Debug|x86
+		{DA7BF2D2-04F3-48A5-9AD2-E49AC2D9EB29}.Debug|x86.Build.0 = Debug|x86
+		{DA7BF2D2-04F3-48A5-9AD2-E49AC2D9EB29}.Release|x86.ActiveCfg = Release|x86
+		{DA7BF2D2-04F3-48A5-9AD2-E49AC2D9EB29}.Release|x86.Build.0 = Release|x86
+		{4E9BCA9D-2D08-4576-B8D5-64FB2CB27AA6}.Debug|x86.ActiveCfg = Debug|x86
+		{4E9BCA9D-2D08-4576-B8D5-64FB2CB27AA6}.Debug|x86.Build.0 = Debug|x86
+		{4E9BCA9D-2D08-4576-B8D5-64FB2CB27AA6}.Release|x86.ActiveCfg = Release|x86
+		{4E9BCA9D-2D08-4576-B8D5-64FB2CB27AA6}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
