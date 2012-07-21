@@ -13,9 +13,18 @@ namespace Pengball.Objects
         public ManualPlayer(string id, PengWorld world, PlayerSide dir, Vector2 startPosition)
             : base(id, world, dir, startPosition)
         {
-            UpKey = Keys.Up;
-            LeftKey = Keys.Left;
-            RightKey = Keys.Right;
+            if (dir == PlayerSide.Left)
+            {
+                UpKey = Keys.W;
+                LeftKey = Keys.A;
+                RightKey = Keys.D;
+            }
+            else
+            {
+                UpKey = Keys.Up;
+                LeftKey = Keys.Left;
+                RightKey = Keys.Right;
+            }
         }
 
         public Keys UpKey { get; set; }
