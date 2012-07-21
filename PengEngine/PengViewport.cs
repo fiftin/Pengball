@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace PengEngine
 {
@@ -12,6 +13,10 @@ namespace PengEngine
         private float width;
         private float height;
 
+        public PengViewport(Vector2 size)
+            : this(0, 0, size.X, size.Y)
+        {
+        }
 
         public PengViewport(float left, float top, float width, float height)
             : this()

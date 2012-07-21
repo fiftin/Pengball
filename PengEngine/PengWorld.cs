@@ -36,7 +36,7 @@ namespace PengEngine
             objects = new Dictionary<string, PengObject>();
             readOnlyObjects = new ReadOnlyDictionary<string, PengObject>(objects);
             world = new World(new Vector2(0, 10));
-            viewport = new PengViewport(0, 0, 80, 30);
+            viewport = new PengViewport(0, 0, 40, 20);
             Visible = visible;
             this.content = content;
             this.graphics = graphics;
