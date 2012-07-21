@@ -46,13 +46,16 @@ namespace Pengball
             if (Loaded != null)
                 Loaded(this, new EventArgs());
 
-            if (!gameplay)
+            if (gameplay)
+                StartGame();
+            else
             {
                 Ball.Body.IgnoreCollisionWith(Objects["ballLeftStand"].Body);
                 Ball.Body.IgnoreCollisionWith(Objects["ballRightStand"].Body);
                 Ball.Body.IgnoreCollisionWith(Objects["ballLeftStand"].Body);
                 Ball.Body.IgnoreCollisionWith(Objects["ballRightStand"].Body);
             }
+            
         }
 
         private bool gameplay;
@@ -68,7 +71,7 @@ namespace Pengball
         public Player LeftPlayer { get; private set; }
         public Player RightPlayer { get; private set; }
         public Tree Tree { get; private set; }
-
+        public Player Winner { get; private set; }
         public void StopGame(GameStopReason reason = GameStopReason.None)
         {
             UnactivePlayers();
@@ -76,16 +79,28 @@ namespace Pengball
             stopTime = DateTime.Now;
             startTime = null;
             GameStopReason = reason;
+            if (reason == Pengball.GameStopReason.GoalToLeft)
+                Winner = RightPlayer;
+            else if (reason == Pengball.GameStopReason.GoalToRight)
+            {
+                Winner = LeftPlayer;
+            }
+            else
+            {
+                Winner = null;
+            }
         }
 
         public void StartGame()
         {
             if (GameStopReason == GameStopReason.GoalToLeft)
-                ((Ball)Objects["ball"]).ResetToRight();
+                Ball.ResetToRight();
             else if (GameStopReason == GameStopReason.GoalToRight)
-                ((Ball)Objects["ball"]).ResetToLeft();
+                Ball.ResetToLeft();
             else
-                ((Ball)Objects["ball"]).ResetToLeft();
+            {
+                Ball.Reset();
+            }
             ((Player)Objects["leftPlayer"]).Reset();
             ((Player)Objects["rightPlayer"]).Reset();
             Objects["leftPlayer"].Body.RestoreCollisionWith(Objects["ball"].Body);
