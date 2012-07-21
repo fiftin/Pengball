@@ -31,7 +31,7 @@ namespace Pengball.Objects
 
 
 
-        public ComputerPlayer(string id, PengWorld world, PlayerDirection dir, Vector2 startPosition)
+        public ComputerPlayer(string id, PengWorld world, PlayerSide dir, Vector2 startPosition)
             : base(id, world, dir, startPosition)
         {
             string screenplay = ((PengballWorld)world).Screenplay;
@@ -66,7 +66,7 @@ namespace Pengball.Objects
             if (!GameStopped)
             {
                 var contactee = GetContactee(e);
-                if (IsOnTheMySide(World.Ball.Position)
+                if (InMySide(World.Ball.Position)
                     && contactee != ContacteeEnum.Other)
                 {
                     if (contactee == ContacteeEnum.Self)
@@ -137,11 +137,6 @@ namespace Pengball.Objects
             trajectory = trajectoryPointList.ToArray();
         }
 
-        private bool IsOnTheMySide(Vector2 point)
-        {
-            return point.X > World.Viewport.Width / 2 + World.Tree.Size.X / 2;
-        }
-
         public float TargetPositionRandomOffset
         {
             get { return targetPositionRandomOffset; }
@@ -175,7 +170,6 @@ namespace Pengball.Objects
             {
                 targetPosition = 3.5f;
                 targetTime = null;
-                //targetTime = DateTime.Now;
                 JumpInternal();
             }
             else
@@ -189,42 +183,43 @@ namespace Pengball.Objects
         {
             if (!GameStopped)
             {
+                base.OnUpdate(gameTime);
+                return;
+            }
 
-                if (previousUpdateBollPosition.HasValue
-                    && !IsOnTheMySide(previousUpdateBollPosition.Value)
-                    && IsOnTheMySide(World.Ball.Position)
-                    && World.Ball.LinearVelocity.X > 0)
+
+            if (previousUpdateBollPosition.HasValue
+                && !InMySide(previousUpdateBollPosition.Value)
+                && InMySide(World.Ball.Position)
+                && World.Ball.LinearVelocity.X > 0)
+            {
+                CalculateTargetPosition(ContacteeEnum.Other);
+            }
+
+            if (targetPosition != null)
+            {
+                if (Position.X > targetPosition + 0.03)
                 {
-                    CalculateTargetPosition(ContacteeEnum.Other);
+                    MoveLeft();
                 }
-
-                if (targetPosition != null)
+                else if (Position.X < targetPosition - 0.03)
                 {
-                    if (Position.X > targetPosition + 0.03)
+                    MoveRight();
+                }
+                else
+                {
+                    NoMove();
+                    if (targetTime != null)
                     {
-                        MoveLeft();
-                    }
-                    else if (Position.X < targetPosition - 0.03)
-                    {
-                        MoveRight();
-                    }
-                    else
-                    {
-                        NoMove();
-                        if (targetTime != null)
+                        var milliseconds = (targetTime.Value - DateTime.Now).TotalMilliseconds;
+                        if (milliseconds < 0 && milliseconds > -1000)
                         {
-                            var milliseconds = (targetTime.Value - DateTime.Now).TotalMilliseconds;
-                            if (milliseconds < 0 && milliseconds > -1000)
-                            {
-                                Jump();
-                            }
+                            Jump();
                         }
                     }
                 }
-
-                previousUpdateBollPosition = World.Ball.Position;
-
             }
+            previousUpdateBollPosition = World.Ball.Position;
 
             base.OnUpdate(gameTime);
         }

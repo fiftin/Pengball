@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pengball.Objects
 {
-    public enum PlayerDirection
+    public enum PlayerSide
     {
         Left,
         Right,

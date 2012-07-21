@@ -112,7 +112,7 @@
     <Compile Include="Objects\NetPlayer.cs" />
     <Compile Include="Objects\Actor.cs" />
     <Compile Include="Objects\Player.cs" />
-    <Compile Include="Objects\PlayerDirection.cs" />
+    <Compile Include="Objects\PlayerSide.cs" />
     <Compile Include="Objects\Tree.cs" />
     <Compile Include="PengballWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

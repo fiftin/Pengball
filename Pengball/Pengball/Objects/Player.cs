@@ -16,20 +16,14 @@ namespace Pengball.Objects
     {
 
         private DateTime? lastJumpTime;
-        private PlayerDirection direction;
-        private float jumpImpulse;
-        private bool inJump;
-
-        public Ball Ball { get { return World.Ball; } }
-        public bool GameStopped { get { return World.GameStopped; } }
 
         public const float DefaultJumpImpulse = 5.8f;
         public const float DefaultVelocity = 2.5f;
 
-        public Player(string id, PengWorld world, PlayerDirection direction, Vector2 startPosition)
+        public Player(string id, PengWorld world, PlayerSide side, Vector2 startPosition)
             : base(id, world)
         {
-            this.direction = direction;
+            Side = side;
             StartPosition = startPosition;
             JumpImpulse = DefaultJumpImpulse;
             Velocity = DefaultVelocity;
@@ -38,14 +32,6 @@ namespace Pengball.Objects
         }
 
         public Vector2 StartPosition { get; set; }
-
-        public new PengballWorld World
-        {
-            get
-            {
-                return (PengballWorld)base.World;
-            }
-        }
 
         public void Reset()
         {
@@ -106,36 +92,38 @@ namespace Pengball.Objects
 
         public bool InJump
         {
-            get
-            {
-                return inJump;
-            }
-            private set
-            {
-                inJump = value;
-            }
+            get;
+            private set;
         }
 
         public float JumpImpulse
         {
-            get
-            {
-                return jumpImpulse;
-            }
-            set
-            {
-                jumpImpulse = value;
-            }
+            get;
+            set;
         }
 
         public float Velocity { get; set; }
 
-        public PlayerDirection Direction
+        public PlayerSide Side
         {
-            get { return direction; }
+            get;
+            private set;
         }
 
         public Player Rival { get; internal set; }
+
+        protected bool InMySide(Vector2 point)
+        {
+            if (Side == PlayerSide.Left)
+            {
+                return point.X < WorldSize.X / 2;
+            }
+            else
+            {
+                return point.X > WorldSize.X / 2;
+            }
+            //return point.X > World.Viewport.Width / 2 + World.Tree.Size.X / 2;
+        }
 
         private float ConvertTextureToLocalX(int i)
         {
@@ -144,7 +132,7 @@ namespace Pengball.Objects
 
         private Vector2 ConvertTextureToLocal(int x, int y)
         {
-            if (Direction == PlayerDirection.Right)
+            if (Side == PlayerSide.Left)
             {
                 x = Texture.Width - x;
             }
@@ -170,7 +158,7 @@ namespace Pengball.Objects
 
         private void Initialize()
         {
-            Mirroring = (direction == PlayerDirection.Right) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            Mirroring = (Side == PlayerSide.Left) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Texture = LoadContent<Texture2D>("textures/penguin");
             Size = new Vector2(0.7f, 0.7f * Texture.Height / Texture.Width);
             Body = BodyFactory.CreateBody(World.World);

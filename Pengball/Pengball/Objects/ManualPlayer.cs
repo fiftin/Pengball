@@ -10,7 +10,7 @@ namespace Pengball.Objects
 {
     public class ManualPlayer : Player
     {
-        public ManualPlayer(string id, PengWorld world, PlayerDirection dir, Vector2 startPosition)
+        public ManualPlayer(string id, PengWorld world, PlayerSide dir, Vector2 startPosition)
             : base(id, world, dir, startPosition)
         {
             UpKey = Keys.Up;
