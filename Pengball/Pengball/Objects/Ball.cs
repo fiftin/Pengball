@@ -22,23 +22,34 @@ namespace Pengball.Objects
 
         public Vector2 LeftStartPos { get; set; }
         public Vector2 RightStartPos { get; set; }
+        public PlayerSide InitialSide { get; private set; }
 
-        public Ball(string name, PengWorld world, Vector2 leftStartPos, Vector2 rightStartPos, float radius)
+        public Ball(string name, PengWorld world, Vector2 leftStartPos, Vector2 rightStartPos, float radius, PlayerSide side)
             : base(name, world)
         {
             this.radius = radius;
             LeftStartPos = leftStartPos;
             RightStartPos = rightStartPos;
+            InitialSide = side;
+
             Inititalize();
         }
 
         bool isSleep = true;
 
+        public void Reset()
+        {
+            if (InitialSide == PlayerSide.Left)
+                ResetToLeft();
+            else
+                ResetToRight();
+        }
+
         public void ResetToLeft()
         {
             Position = LeftStartPos;
-            Body.LinearVelocity = new Vector2(0, 0);
-            Body.AngularVelocity = 0f;
+            Body.LinearVelocity = Vector2.Zero;
+            Body.AngularVelocity = 0;
             isSleep = true;
             Body.RestoreCollisionWith(World.Objects["ballLeftStand"].Body);
         }
@@ -46,8 +57,8 @@ namespace Pengball.Objects
         public void ResetToRight()
         {
             Position = RightStartPos;
-            Body.LinearVelocity = new Vector2(0, 0);
-            Body.AngularVelocity = 0f;
+            Body.LinearVelocity = Vector2.Zero;
+            Body.AngularVelocity = 0;
             isSleep = true;
             Body.RestoreCollisionWith(World.Objects["ballRightStand"].Body);
         }
@@ -66,7 +77,8 @@ namespace Pengball.Objects
         private void Inititalize()
         {
             ListenContacts = true;
-            Body = BodyFactory.CreateCircle(World.World, radius, 10, LeftStartPos);
+            var initPos = InitialSide == PlayerSide.Left ? LeftStartPos : RightStartPos;
+            Body = BodyFactory.CreateCircle(World.World, radius, 10, initPos);
             Body.BodyType = FarseerPhysics.Dynamics.BodyType.Dynamic;
             Size = new Vector2(radius * 2, radius * 2);
             Texture = LoadContent<Texture2D>("textures/ball");

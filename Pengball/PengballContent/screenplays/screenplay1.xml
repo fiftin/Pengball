@@ -161,6 +161,9 @@
         <arg type="System.Single"> <!-- Redius -->
           <v>0.2</v>
         </arg>
+        <arg type="Pengball.Objects.PlayerSide">
+          <v>Left</v>
+        </arg>
       </args>
       
       <props>
@@ -183,25 +186,18 @@
     </object>
 
     
-    <object name="leftPlayer" type="Pengball.Objects.ManualPlayer, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <object name="leftPlayer" type="Pengball.Objects.ComputerPlayer, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <args>
         <arg type="Pengball.Objects.PlayerSide">
           <v>Left</v>
         </arg>
         <arg type="vector">
-          <v>0.8;2.9</v>    <!-- StartPosition -->
+          <v>0.5;2.9</v>    <!-- StartPosition -->
         </arg>
       </args>
+
       <props>
-        <prop name="UpKey">
-          <v>W</v>
-        </prop>
-        <prop name="LeftKey">
-          <v>A</v>
-        </prop>
-        <prop name="RightKey">
-          <v>D</v>
-        </prop>
+
         <prop name="Mass">
           <v>3</v>
         </prop>
@@ -209,9 +205,10 @@
           <v>18</v>
         </prop>
       </props>
+
     </object>
 
-    <object name="rightPlayer" type="Pengball.Objects.ComputerPlayer, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <object name="rightPlayer" type="Pengball.Objects.ManualPlayer, Pengball, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <args>
         <arg type="Pengball.Objects.PlayerSide"> 
           <v>Right</v> 
@@ -227,14 +224,6 @@
         <prop name="JumpImpulse">
           <v>18</v>
         </prop>
-        <!--
-        <prop name="TargetPositionRandomOffset">
-          <v>0.1</v>
-        </prop>
-        <prop name="TargetPositionOffset">
-          <v>0.05</v>
-        </prop>
-        -->
       </props>
     </object>
 
