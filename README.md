@@ -1,2 +1,2 @@
 # README #
-Simple game written with using XNA. Two penguin play volleyball.
+Simple game written with using XNA. Two penguins play volleyball.
